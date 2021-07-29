@@ -134,3 +134,83 @@ val = nonlocal_test()
 print(val())
 print(val())
 print(val())
+
+''':return'''
+#返回值和无返回值，没有返回值默认返回一个None;有返回值，可以返回return,但是需要加上具体值
+#无返回值
+def no_return():
+    print('no return 函数不写return语句')
+
+def just_return():
+    print('函数只写return，不返回具体内容')
+
+def return_val():
+    x=10
+    y=10
+    z = x + y
+    print('函数返回具体结果')
+    return z
+return_val()
+
+'''函数返回函数'''
+def sum_late(*args):
+    def calc_sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return calc_sum()
+print(sum_late(5))
+calc_sum = sum_late(1,2)
+print(calc_sum)
+'''闭包：如果在一个函数内部中对外部函数（不在全局作用域）的变量进行引用，内部函数称为闭包'''
+def func_count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+            return i * i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = func_count()
+print(f'f1的结果是：',{f1()})
+#返回闭包时，返回函数不要引用任何循环变量或后续会发生变化的变量，否则很容易出现你意想不到的问题。
+
+'''递归函数：一个函数内部调用自身'''
+
+def recurision():
+    return recurision()  #无穷递归，理论上永远不会结束
+
+#可用的递归：当函数直接返回值时有基本实例，递归实例，包括一个或多个问题最小部分的递归调用。
+def fact(n):
+    if n==1:
+        return 1
+    return n * fact(n-1)
+#递归函数需要注意防止栈溢出。在计算机中，函数调用是通过栈（stack）这种数据结构实现的。每当进入一个函数调用，栈就会加一层栈帧；每当函数返回，栈就会减一层栈帧。
+'''lambda'''
+#lambda函数拥有自己的命名空间，不能访问自有参数列表之外或全局命名空间的参数
+lambda x,y: x + y
+#使用匿名函数：程序一次性使用、不需要定义函数名时，用匿名函数可以节省内存中定义变量所占的空间；如果想让程序更加简洁，使用匿名函数就可以做到。
+#规则：一行表达式，必须有返回值；不能有return；可以没有参数，也可以有一个或多个参数。
+
+t = lambda x,y : x * y
+t(2,3) #匿名函数调用
+t1 = lambda x, y=3: x + y
+t1(2) #使用默认值
+
+'''偏函数'''
+#通过functools模块被调用，偏函数是将所要承载的函数作为partial()函数的第一个参数，原函数的各个参数依次作为partial()函数的后续参数，除非使用关键参数。
+
+'''装饰器'''
+#函数对象可以赋值给变量，通过变量调用该函数;不修改原来的函数，为改函数增加功能
+def fuc():
+    print('函数名称是：')
+f = fuc
+f()
+print(fuc.__name__)
+
+def log(func):
+    def wrapper(*args,**kwargs):
+        print('call %s()'% func.__name__)
+        return func(args,**kwargs)
+    return wrapper()
