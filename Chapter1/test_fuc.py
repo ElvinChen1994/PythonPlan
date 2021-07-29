@@ -214,3 +214,10 @@ def log(func):
         print('call %s()'% func.__name__)
         return func(args,**kwargs)
     return wrapper()
+
+'''列表生成式'''
+#for前面的if..else是表达式，for后面的if是过滤条件，不能加else
+[x if x % 2 == 0 else -x for x in range(1, 11)]
+
+x = 123
+print(isinstance(x, int))#判断变量是不是整型
