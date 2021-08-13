@@ -150,3 +150,39 @@ if __name__ == '__main__':
 # 类外部访问name属性= 老网
 
 '''多重继承'''
+class Animal(object):
+    pass
+
+
+class Bird(Animal):
+    pass
+
+
+class Fly(object):
+    pass
+
+
+class Parrot(Bird,Fly):
+    pass
+
+
+class A(object):
+    def m(self):
+        print("m of A ")
+
+
+class B(A):
+    pass
+
+
+class C(A):
+    def m(self):
+        print("m of C ")
+
+
+class D(B, C): #使用广度优先，从左到右的原则寻找属性和方法
+    pass
+a = A()
+
+#使用isinstance()函数
+isinstance(a,A)
