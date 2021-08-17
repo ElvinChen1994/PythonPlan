@@ -422,3 +422,66 @@ class Foo:
 
 obj = Foo('xiaohyang', 13)
 print(obj) #print(str(obj))
+
+
+'''__dict__ : 输入为字典'''
+class Foo:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.eve = 12
+obj = Foo('xiaoming', 12)
+d = obj.__dict__
+print(d)
+
+'''__getitem__ : 切片或者索引'''
+class Foo:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.eve = 12
+
+    def __getitem__(self, item): #该方法有返回值，其他不需要
+        '''
+        #如果item是基本类型：int, str, 索引获取
+        slice对象的话，切片
+        :param item:
+        :return:
+        '''
+        if type(item) == slice:
+            print('调用者希望内部做切片处理')
+        else:
+            print('调用者希望内部做索引处理')
+        #return item + 1
+        print(item, type(item))
+
+    def __setitem__(self, key, value):
+        print(key,value)
+
+    def __delitem__(self, key):
+        print(key)
+
+obj = Foo('xiaoming', 12)
+d = obj[8] #自动执行对象的类中的__getitem__方法，当做参数进行传递item
+d = obj[1:4:2]
+print(d)
+#obj[10] = 111
+# del obj[222]
+
+'''__iter__'''
+class Foo:
+
+    def __init__(self, name,age):
+        self.name = name
+        self.age = age
+
+    def __iter__(self):
+        return iter(list([11,22,32,23]))
+obj = Foo('xiaomiu', 19)
+
+#1.获取类中有__iter__方法，对象可迭代，for循环，迭代器，next；for循环，可迭代独享，对象.__iter()，迭代器，next
+#2.执行对象类的__iter__方法，并获取返回值
+#3.循环上一步返回的对象
+
