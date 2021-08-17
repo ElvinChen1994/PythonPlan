@@ -170,19 +170,255 @@ class A(object):
     def m(self):
         print("m of A ")
 
+#
+# class B(A):
+#     pass
+#
+#
+# class C(A):
+#     def m(self):
+#         print("m of C ")
+#
+#
+# class D(B, C): #使用广度优先，从左到右的原则寻找属性和方法
+#     pass
+# a = A()
 
-class B(A):
+
+class F:
+
+    def f1(self):
+        print('F.f1')
+
+    def b2(self):
+        print('F.f2')
+
+
+class C(F):
+    def c1(self):
+        print('C.c1')
+
+    def c2(self):
+        print('C.c2')
+
+obj = C()
+obj.c1() #c1中的self是形参，指obj
+obj.b2() #self用于指调用方法的调用者
+
+class F:
+
+    def f1(self):
+        print('F.f1')
+
+    def c2(self):
+        print('F.f2')
+
+
+class C(F):
+    def c1(self):
+        print('C.c1')
+
+    def c2(self):
+        print('C.c2')
+        #super(C, self).c2()#执行父类中的方法，
+        F.f1(self)#另一种调用父类的方法，self需要收到传入
+
+obj = C()
+obj.c1() #c1中的self是形参，指obj
+obj.b2() #self用于指调用方法的调用者
+
+
+class BaseOne():
+
     pass
 
 
-class C(A):
-    def m(self):
-        print("m of C ")
+class EveryOne(BaseOne):
+
+    def sever_one(self):
+        self.pro_one()  #调用的顺序是按照子类中的从左向右去查找
+
+    def pro_one(self):
+        print('this pro')
 
 
-class D(B, C): #使用广度优先，从左到右的原则寻找属性和方法
+class EveryTwo:
+
+    def pro_one(self):
+        print('this pro two')
+
+
+class EveryThree(EveryTwo,EveryOne):
     pass
-a = A()
+
+obj = EveryThree()
+obj.sever_one()
+
+
+class BaseOne():
+
+    def __init__(self):
+        print('this is base one')
+
+
+
+class EveryOne(BaseOne):
+
+    def __init__(self): # 若出现两个初始化方法，只执行一个
+        print('this is zero')
+        BaseOne.__init__(self) #若想父类的初始化方法也执行，需要进行调用
+
+    def sever_one(self):
+        self.pro_one()
+
+    def pro_one(self):
+        print('this pro')
+
+
+class EveryTwo:
+
+    def pro_one(self):
+        print('this pro two')
+
+
+class EveryThree(EveryTwo,EveryOne):
+    pass
+
+obj = EveryThree()
+
+
+class Feel:
+    #静态字段，属于类，执行可以通过对象访问，也可以通过类访问
+    age = 10
+
+    def __init__(self, name):
+        #普通字段，属于对象,只能通过对象访问
+        self.name = name
+
+    #普通方法
+    def show(self):
+        print(self.name)
+
+    @staticmethod  #静态方法，此时self,可以不传，直接通过类调用
+    def stat():
+        print('123')
+
+    @property #属性，用于获取值
+    def per(self):
+        print('232')
+
+    @per.setter #设置值
+    def per(self,svr):
+        print(svr)
+
+obj = Feel('wangwang')
+obj.name
+obj.show()
+Feel.age
+Feel.show(obj) #类方法，需要传入对象
+Feel.stat()
+obj.per #调用方法，已字段的方式访问
+
+
+class Foo:
+
+    def foo(self):
+        return 333
+
+    por = property(fget=foo)
+
+    # @property   与上面实现一致
+    # def por(self):
+    #     return 333
+
+obj = Foo()
+res = obj.por
+print(res)
+
+'''成员修饰符：公有成员、私有成员   '''
+class Foo:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.__age = age
+
+    def show(self):
+        return Foo.__age
+
+foo = Foo()
+print(foo.__age)#私有属性无法通过外部访问，
+res = foo.show()
+print(res)
+
+
+class Foo:
+
+    def __f2(self): #私有方法
+        return 123
+
+    def f3(self):
+        r = self.__f2()#通过对象调用私有方法
+        return r
+
+obj = Foo()
+ret = obj.__f1()
+print(ret)
+
+
+class Feel:
+    def __init__(self):
+        self.__gen = 123
+        self.ge = 44
+
+
+class FeelGood(Feel):
+    def __init__(self, name):
+        self.name = 123
+        super(FeelGood, self).__init__()
+
+    def show(self):
+        print(self.ge)  # 子类只能访问父类的公有字段
+
+
+s = FeelGood()
+
+class Foo:
+    def __init__(self):
+        print('初始方法')
+
+    def __call__(self, *args, **kwargs):
+        print('call')
+
+obj = Foo()
+obj() #该调用方式与__call__方法使用
+Foo()()#与obj()一致
 
 #使用isinstance()函数
-isinstance(a,A)
+#isinstance(a,A)
+
+'''多态：python原生就是多态，有多种类型，其他语言明确指定某种类型'''
+
+'''__len__方法'''
+class Two:
+    def __init__(self, N):
+        self.N = N
+        self.even_list = [2 * x for x in range(N)]
+
+    def __len__(self):
+        return self.N
+
+two = Two(10)
+print(len(two))
+
+'''__str__'''
+class Foo:
+    def __init__(self, m, a):
+        self.name = m
+        self.age = a
+
+    def __str__(self):
+        return '%s-%s' %(self.name, self.age)
+
+
+obj = Foo('xiaohyang', 13)
+print(obj) #print(str(obj))
