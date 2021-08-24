@@ -161,3 +161,41 @@ import fileinput
 
 for line in fileinput.input(path):
     print(f'line is:{line}')
+
+'''
+文件名处理
+'''
+import time
+import os
+def ervery_name(path):
+    global img_num
+
+    if not os.path.dirname(path) and not os.path.isfile(path):
+        return False
+
+    if os.path.isfile(path):
+        #分割目录文件
+        file_name = os.path.split(path)
+        print(file_name)
+        #分割出的文件和扩展名
+        lists = file_name[1].split('.')
+        print(lists)
+        #取出后缀名
+        file_ext = lists[-1]
+        print(file_ext)
+        img_txt = ['txt','gif']
+        if file_ext in img_txt:
+            os.rename(path,file_name[0] + '/' + lists[0] + '_cn' + file_ext)
+            img_num += 1
+    elif os.path.isdir(path):
+        for item in os.listdir(path):
+            ervery_name(os.path.join(path, item))
+
+
+
+
+if __name__ == '__main__':
+    img_dir ='/Users/macintoshhd/PycharmProjects/PythonPlan/Chapter7/test_elvin_file.txt'
+    ervery_name(path)
+    start = time.time()
+    img_num = 0
