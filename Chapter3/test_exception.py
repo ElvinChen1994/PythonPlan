@@ -97,3 +97,22 @@ except Exception as e:
         3 / 3 == 1
     except Exception as a:
         print('第二个错误: ', a)
+
+
+def retruntest(a):
+    try:
+        if a <= 0:
+            raise ValueError("data not in")
+        else:
+            return a
+    except ValueError as e:
+        print(e)
+
+    finally:
+        print("end...")
+        return -1
+'''
+finally中使用retrun语句进行返回，可能会出现问题
+'''
+print(retruntest(0))
+print(retruntest(2))
