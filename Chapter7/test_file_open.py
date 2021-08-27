@@ -199,3 +199,30 @@ if __name__ == '__main__':
     ervery_name(path)
     start = time.time()
     img_num = 0
+
+
+'''os.walk()文件遍历查找'''
+path = '/Users/macintoshhd/PycharmProjects/PythonPlan'
+for dpath, dirname, dnames in os.walk(path):
+    print(dpath) #遍历所有文件夹路径
+
+for dpath, dirname, dnames in os.walk(path):
+    print(dirname) #遍历所有文件夹名
+
+for dpath, dirname, dnames in os.walk(path):
+    print(dnames) #遍历所有文件名
+
+#遍历路径下的文件
+def file_get(path, rule=".py"):
+    file_data = []
+    for dpath, dirname, dnames in os.walk(path):
+        for f in dirname:
+            file_name = os.path.join(dpath, f)
+            if file_name.endswith(rule): #fa
+                file_data.append(file_name)
+    return file_data
+
+if __name__ == '__main__':
+    file_in = file_get(r"/Users/macintoshhd/PycharmProjects/PythonPlan/Chapter1")
+    for i in file_in:
+        print(i)
