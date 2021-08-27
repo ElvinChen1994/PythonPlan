@@ -221,3 +221,14 @@ def log(func):
 
 x = 123
 print(isinstance(x, int))#判断变量是不是整型
+
+'''zip()迭代'''
+li = ['a', 'b', 'c', 'd', 'e']
+for i,e in zip(range(len(li)),li):
+    print("index:",i,"element:",e)
+
+'''使用enimerate迭代序列'''
+li = ['a', 'b', 'c', 'd', 'e']
+
+for i,e in enumerate(li):
+    print("index:",i,"element:",e)
