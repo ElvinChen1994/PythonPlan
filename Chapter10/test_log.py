@@ -221,7 +221,7 @@ file_handler.addFilter(LogLevelFilter(level=logging.INFO))
 logger.addHandler(file_handler)                     # 添加处理器
 logger.setLevel(logging.DEBUG)
 
-la = LoggerAdapter(logger, {"ip": '123.56.190.188'})
+la = LoggerAdapter(logger, {'xxx'})
 
 la.debug('debug message')
 la.info('info message')
