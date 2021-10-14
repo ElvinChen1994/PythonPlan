@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dbconfig>
+    <mysql>
+        <host>127.0.0.1</host>
+        <port>3306</port>
+        <dbname>test</dbname>
+        <username>root</username>
+        <password>4444</password>
+        <node>agent1</node>
+    </mysql>
+
+    </dbconfig>
